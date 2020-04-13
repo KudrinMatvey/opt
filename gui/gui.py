@@ -1,5 +1,7 @@
 import sys
 
+from PyQt5.QtWidgets import QAction
+
 from src.opt import opt
 from PyQt5 import QtCore, QtGui, QtWidgets
 from gui.mplwidget import MplWidget
@@ -300,6 +302,16 @@ class Ui_MainWindow(object):
         ui = Ui_MainWindow()
         ui.setupUi(MainWindow)
         MainWindow.show()
+        menu = MainWindow.menuBar()
+        MethodMenu = menu.addMenu("Метод")
+
+        MethodP = QAction()
+        MethodP.setText("P")
+
+
+        MethodMenu.addAction(MethodP)
+        SecondWindow = QtWidgets.QMainWindow()
+        SecondWindow.show()
         sys.exit(app.exec_())
 
     def ClearPlot(self):
