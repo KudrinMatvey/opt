@@ -179,6 +179,8 @@ class opt(object):
         return True if _interval.GetIRb()[0] - _interval.GetILb()[0] < self._eps else False
 
     def Minimize(self, lb, rb, r, method, max_iter=None, eps=None):
+        self._sol = solution()
+        self._sol.points = []
         intervals = list()
         lipsh = None
 

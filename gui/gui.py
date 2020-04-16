@@ -47,10 +47,6 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.MplWidget = MplWidget(self.centralwidget)
-        self.MplWidget.setMinimumSize(QtCore.QSize(960, 300))
-        self.MplWidget.setObjectName("MplWidget")
-        self.verticalLayout_3.addWidget(self.MplWidget)
         self.groupBox_4 = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_4.setObjectName("groupBox_4")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.groupBox_4)
@@ -325,6 +321,10 @@ class Ui_MainWindow(object):
     def DisplaySolution(self):
         optimizer = opt()
         opt_params = params()
+        self.MplWidget = MplWidget(self.centralwidget)
+        self.MplWidget.setMinimumSize(QtCore.QSize(960, 300))
+        self.MplWidget.setObjectName("MplWidget")
+        self.verticalLayout_3.addWidget(self.MplWidget)
 
         opt_params.a = float(self.funcParamA.text())
         opt_params.b = float(self.funcParamB.text())
@@ -334,6 +334,8 @@ class Ui_MainWindow(object):
         opt_params.right_bound = float(self.funcParamRightB.text())
         opt_params.max_iter = int(self.maxIterCount.text())
         opt_params.r = float(self.r.text())
+        self.MplWidget.canvas.axes.cla()
+        self.MplWidget.canvas.axes.clear()
 
         if self.radioButtonBrutforce.isChecked():
             opt_params.method = optimizer.methods.BruteForse
@@ -359,8 +361,9 @@ class Ui_MainWindow(object):
 
         y = [optimizer.Func(point) for point in x]
 
+        self.MplWidget.canvas.clear()
         self.MplWidget.canvas.axes.plot(x, y)
-        
+
         for point in solution.points:
             self.MplWidget.canvas.axes.plot(point[0], solution.minimum[1] - 0.1, color="green", marker="*")
 
